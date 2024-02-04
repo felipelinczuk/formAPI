@@ -1,5 +1,4 @@
 ﻿using formAPI.src.Models;
-using formAPI.src.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +8,10 @@ namespace formAPI.src.Controllers;
 [Route("api/person")]
 public class PersonController : ControllerBase
 {
-    private readonly PersonService _service;
+    private readonly AppDBContext _appDBContext;
     
     public PersonController(AppDBContext appDBContext){
-        _service = new PersonService(appDBContext);
+        _appDBContext = appDBContext;
     }
 
     [HttpGet]
@@ -20,7 +19,7 @@ public class PersonController : ControllerBase
         try{
             return Ok(new {
                 sucess = true,
-                data = await _service.GetAll()
+                data = await _appDBContext.People.Where(p => p.DeletedAt == null).ToListAsync()
             });
         }
         catch(Exception e){
@@ -34,7 +33,7 @@ public class PersonController : ControllerBase
         try{        
             return Ok(new {
                 sucess = true,
-                data = await _service.GetById(id)
+                data = await _appDBContext.People.FindAsync(id)
             });
         }
         catch(Exception e){
@@ -46,7 +45,8 @@ public class PersonController : ControllerBase
     [HttpPost("new")]
     public async Task<IActionResult> RegisterPerson(Person person){
         try{
-            await _service.Create(person);
+            _appDBContext.People.Add(person);
+            await _appDBContext.SaveChangesAsync();
             return await Task.FromResult(CreatedAtAction(nameof(GetPersonById), new { id = person.Id }, person));
         }
         catch(Exception e){
@@ -58,7 +58,7 @@ public class PersonController : ControllerBase
     [HttpPut("edit/{id}")]
     public async Task<IActionResult> ChangePerson(Person person, Guid id){
         try{
-            var _person = await _service.GetById(id);
+            var _person = _appDBContext.People.SingleOrDefault(p => p.Id == id);
         
             if(_person == null){
                 return NotFound(new {
@@ -67,9 +67,16 @@ public class PersonController : ControllerBase
                 });
             }
 
+            _person.Name = person.Name;
+            _person.CPF = person.CPF;
+            _person.BirthDate = person.BirthDate;
+            _person.MonthlyIncome = person.MonthlyIncome;
+
+            await _appDBContext.SaveChangesAsync();
+
             return Ok(new {
                 sucess = true,
-                data = await _service.Update(person, id)
+                data = _person
             });
         }
         catch(Exception e){
@@ -81,7 +88,7 @@ public class PersonController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Remove(Guid id){
         try{
-            var _person = await _service.GetById(id);
+            var _person = _appDBContext.People.SingleOrDefault(p => p.Id == id);
         
             if(_person == null){
                 return NotFound(new {
@@ -90,9 +97,13 @@ public class PersonController : ControllerBase
                 });
             }
 
+            _person.DeletePerson();
+
+            await _appDBContext.SaveChangesAsync();
+
             return Ok(new {
                 sucess = true,
-                data = await _service.Delete(id)
+                data = _person
             });
         }
         catch(Exception e){

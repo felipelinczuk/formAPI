@@ -35,7 +35,10 @@ namespace formAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Income")
+                    b.Property<DateOnly?>("DeletedAt")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("MonthlyIncome")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")

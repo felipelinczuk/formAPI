@@ -14,3 +14,12 @@
         
         dotnet run
 
+---
+
+#### Server Host
+
+http://localhost:5001
+
+#### Swagger
+
+http://localhost:5001/swagger/index.html

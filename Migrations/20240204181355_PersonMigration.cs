@@ -19,7 +19,8 @@ namespace formAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Income = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    MonthlyIncome = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DeletedAt = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {

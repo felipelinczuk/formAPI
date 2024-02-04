@@ -135,3 +135,4 @@ C:\Users\felip\Arquivos\estudos\dotnet\formAPI\obj\Debug\net8.0\refint\formAPI.d
 C:\Users\felip\Arquivos\estudos\dotnet\formAPI\obj\Debug\net8.0\formAPI.pdb
 C:\Users\felip\Arquivos\estudos\dotnet\formAPI\obj\Debug\net8.0\formAPI.genruntimeconfig.cache
 C:\Users\felip\Arquivos\estudos\dotnet\formAPI\obj\Debug\net8.0\ref\formAPI.dll
+C:\Users\felip\Arquivos\estudos\dotnet\formAPI\obj\Debug\net8.0\formAPI.sourcelink.json

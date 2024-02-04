@@ -1,4 +1,5 @@
 using formAPI;
+using formAPI.src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,10 @@ IConfiguration configuration =
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+//builder.Services.AddScoped<PersonService>();
 
 // Database config
-builder.Services.AddSingleton<AppDBContext>();
+builder.Services.AddTransient<AppDBContext>();
 
 var app = builder.Build();
 

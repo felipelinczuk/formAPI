@@ -12,7 +12,7 @@ using formAPI;
 namespace formAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240203204227_PersonMigration")]
+    [Migration("20240204181355_PersonMigration")]
     partial class PersonMigration
     {
         /// <inheritdoc />
@@ -38,7 +38,10 @@ namespace formAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Income")
+                    b.Property<DateOnly?>("DeletedAt")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("MonthlyIncome")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
