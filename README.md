@@ -1,5 +1,13 @@
 # formAPI
 
+### Requirements
+
+* DotNet
+* DotNet EF
+* Docker
+
+---
+
 ### Commands to run
 
 * Downloading docker image MSSQL:
@@ -10,6 +18,10 @@
 
         docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Password123" -p 1433:1433 --name sqlserver --hostname sqlserver -d mcr.microsoft.com/mssql/server:2022-latest
 
+* Running migrations:
+        
+        dotnet ef database update
+
 * Building and running project:
         
         dotnet run
@@ -19,6 +31,8 @@
 #### Server Host
 
 http://localhost:5001
+
+---
 
 #### Swagger
 
