@@ -16,7 +16,7 @@ public class PersonService
     }
 
     public async Task<Person?> GetById(Guid id){
-        return await _appDBContext.People.FindAsync(id);
+        return await _appDBContext.People.Where(p => p.Id == id && p.DeletedAt == null).FirstOrDefaultAsync();
     }
 
     public async Task Create(Person person){

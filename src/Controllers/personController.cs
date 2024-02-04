@@ -31,10 +31,19 @@ public class PersonController : ControllerBase
 
     [HttpGet("find/{id}")]
     public async Task<IActionResult> GetPersonById(Guid id){
-        try{        
+        try{
+            var _person = await _service.GetById(id);
+
+            if(_person == null){
+                return NotFound(new {
+                    sucess = true,
+                    data = "Person not found"
+                });
+            }
+
             return Ok(new {
                 sucess = true,
-                data = await _service.GetById(id)
+                data = _person
             });
         }
         catch(Exception e){
