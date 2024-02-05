@@ -14,7 +14,21 @@ IConfiguration configuration =
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-//builder.Services.AddScoped<PersonService>();
+
+//CORS
+builder.Services.AddCors(
+    options => {
+        options.AddPolicy(
+            "cors",
+            policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }
+        );
+    }
+);
 
 // Database config
 builder.Services.AddTransient<AppDBContext>();
@@ -35,10 +49,6 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 app.MapControllers();
+app.UseCors("cors");
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

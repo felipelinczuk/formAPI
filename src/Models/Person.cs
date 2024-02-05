@@ -21,8 +21,8 @@ public class Person
     }
     public DateOnly BirthDate {get; set;}
     public decimal MonthlyIncome {get; set;}
-
     public DateOnly? DeletedAt {get; private set;}
+
 
     public Person(){
         Id = new Guid();
