@@ -19,6 +19,16 @@ public class PersonService
         return await _appDBContext.People.Where(p => p.Id == id && p.DeletedAt == null).FirstOrDefaultAsync();
     }
 
+    public async Task<Person?> GetByCPF(string cpf){
+        cpf = cpf.Replace("-", "").Replace(".", "").Trim();
+
+        if(cpf.Length != 11){
+                throw new Exception("Invalid Document!");
+        }
+
+        return await _appDBContext.People.Where(p => p.CPF == cpf && p.DeletedAt == null).FirstOrDefaultAsync();
+    }
+
     public async Task Create(Person person){
         _appDBContext.People.Add(person);
         await _appDBContext.SaveChangesAsync();

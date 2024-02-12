@@ -7,6 +7,8 @@
 * Docker
 * Docker-compose
 
+<br>
+
 ---
 
 ### Commands to run
@@ -27,6 +29,8 @@
 
         docker-compose up -d
 
+<br>
+
 ---
 
 #### API Server Host
@@ -44,3 +48,5 @@ http://localhost:5001/swagger/index.html
 #### APP Host
 
 http://localhost:5002
+
+---

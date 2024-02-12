@@ -4,15 +4,15 @@ public class Person
 {
     public Guid Id {get; private set;}
     public string Name {get; set;}
-    public string _cpf;
+    public string _CPF;
     public string CPF {
         get {
-            return _cpf.Insert(3, ".").Insert(7, ".").Insert(11, "-");
+            return _CPF.Insert(3, ".").Insert(7, ".").Insert(11, "-");
         }
         set{
             string temp = value.Replace("-", "").Replace(".", "").Trim();
             if(temp.Length == 11){
-                _cpf = temp;
+                _CPF = temp;
             }
             else{
                 throw new Exception("Invalid Document!");

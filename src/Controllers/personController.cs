@@ -52,6 +52,29 @@ public class PersonController : ControllerBase
         }
     }
 
+    [HttpGet("find/c/{cpf}")]
+    public async Task<IActionResult> GetPersonByCPF(string cpf){
+        try{
+            var _person = await _service.GetByCPF(cpf);
+
+            if(_person == null){
+                return NotFound(new {
+                    sucess = true,
+                    data = "Person not found"
+                });
+            }
+
+            return Ok(new {
+                sucess = true,
+                data = _person
+            });
+        }
+        catch(Exception e){
+            System.Console.WriteLine($"\nFalhou. Erro: {e.Message}; Tipo: {e.GetType()}.");
+            return StatusCode(500, new { success = false, message = $"Internal error. Details: {e.Message}"});
+        }
+    }
+
     [HttpPost("new")]
     public async Task<IActionResult> RegisterPerson(Person person){
         try{
