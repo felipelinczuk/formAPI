@@ -29,12 +29,18 @@
 
 ---
 
-#### Server Host
+#### API Server Host
 
 http://localhost:5001
 
 ---
 
-#### Swagger
+#### API Swagger
 
 http://localhost:5001/swagger/index.html
+
+---
+
+#### APP Host
+
+http://localhost:5002
