@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+
+  msserver-db:
+    container_name: msserver-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Password123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./docker/data/:/var/opt/mssql/data
+
+  form-api:
+    container_name: form-api
+    build: .
+    ports:
+      - "5001:5001"
+    depends_on:
+      - msserver-db
+    volumes:
+      - ./:/formAPI
+    working_dir: /formAPI
+    entrypoint:
+      - ./docker/entrypoint-api.sh
+
+  form-app:
+    container_name: form-app
+    image: nginx:alpine
+    ports:
+      - "5002:80"
+    depends_on:
+      - form-api
+    volumes:
+      - ./docker/entrypoint.sh:/opt/entrypoint.sh
+    working_dir: /usr/share/nginx/html/
+    entrypoint:
+      - /opt/entrypoint-app.sh
+
+networks:
+
+  default:
+    name: formAppNetwork
+    external: true

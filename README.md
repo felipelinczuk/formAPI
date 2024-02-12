@@ -5,26 +5,27 @@
 * DotNet
 * DotNet EF
 * Docker
+* Docker-compose
 
 ---
 
 ### Commands to run
 
-* Downloading docker image MSSQL:
+* Creating networking between containers:
 
-        docker pull mcr.microsoft.com/mssql/server:2022-latest
+        docker network create formAppNetwork
 
-* Building image on a new container:
+* Preparing project to publish:
 
-        docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Password123" -p 1433:1433 --name sqlserver --hostname sqlserver -d mcr.microsoft.com/mssql/server:2022-latest
+        dotnet restore --no-cache
 
-* Running migrations:
+        dotnet publish -c Release
+
+* Building image on a new container and running app:
         
-        dotnet ef database update
+        docker-compose build --no-cache
 
-* Building and running project:
-        
-        dotnet run
+        docker-compose up -d
 
 ---
 
