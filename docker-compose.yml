@@ -34,7 +34,7 @@ services:
     depends_on:
       - form-api
     volumes:
-      - ./docker/entrypoint.sh:/opt/entrypoint.sh
+      - ./docker/:/opt/
     working_dir: /usr/share/nginx/html/
     entrypoint:
       - /opt/entrypoint-app.sh
